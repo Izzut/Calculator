@@ -3,7 +3,6 @@
 #include "Register.h"
 #include <list>
 #include <string>
-#include <fstream>
 
 class Calculator
 {
@@ -19,7 +18,6 @@ private:
 	void create_operation_from_register(Register* fisrt_reg, Register* third_reg);
 	void create_operation_from_value(Register* fisrt_reg, int new_value);
 	bool do_operation_on_register();
-	bool check_components(Register* old_reg, Register* new_reg);
 	bool sanity_check(Register* first_reg, Register* third_reg);
 	bool is_string_number(std::string input_string) const;
 	bool is_string_alphanumeric(std::string input_string) const;

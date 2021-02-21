@@ -32,5 +32,5 @@ cleanL:
 	rm -f *.o && rm -f Calculator && rm -f CalculatorTest
 
 cleanW:
-	del *.o && del Calculator && del CalculatorTest
+	del *.o Calculator.exe CalculatorTest.exe
 

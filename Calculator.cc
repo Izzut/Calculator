@@ -1,11 +1,8 @@
 #include "Calculator.h"
 #include <iostream>
-#include <istream>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
-#include <string>
-#include <cctype>
 
 using namespace std;
 
@@ -128,10 +125,10 @@ bool Calculator::sanity_check(Register* first_reg, Register* third_reg)
 	for (it = third_reg->components.begin(); it != third_reg->components.end(); ++it)
 	{
 		if((*it)->reg != nullptr){
-			return sanity_check(first_reg, (*it)->reg);
+			if(!sanity_check(first_reg, (*it)->reg))
+				return false;
 		}
 	}
-	//returns true if sanity check is ok
 	return true;
 }
 
