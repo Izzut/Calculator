@@ -120,16 +120,15 @@ void Calculator::get_file_command(string filename, int current_line)
 //Also checks so we dont add the register to itself
 bool Calculator::sanity_check(Register* first_reg, Register* third_reg)
 {
-	if (first_reg->name == third_reg->name){
-		cout << "You cannot add a register to istelf" << endl;
+	if (first_reg == third_reg){
+		cerr << "This action would create an endless loop and is not allowed" << endl;
 		return false;
 	}
 	list<Operation *>::iterator it;
 	for (it = third_reg->components.begin(); it != third_reg->components.end(); ++it)
 	{
-		if((*it)->reg != nullptr && (*it)->reg->name == first_reg->name){
-			cout << "This action would create an endless loop and is not allowed" << endl;
-			return false;
+		if((*it)->reg != nullptr){
+			return sanity_check(first_reg, (*it)->reg);
 		}
 	}
 	//returns true if sanity check is ok
@@ -203,7 +202,14 @@ bool Calculator::do_operation_on_register()
 			//If the third argument is not found as an existing register, check if it is a number
 			if (is_string_number(third_arg))
 			{
-				int new_value = stoi(third_arg);
+				int new_value;
+				try{
+					new_value = stoi(third_arg);
+				}
+				catch (const std::out_of_range& oor){
+					cerr << "The number entered is out of range, please try again" << endl;
+					return true;
+				}
 				create_operation_from_value((*it), new_value);
 				return true;
 			}
